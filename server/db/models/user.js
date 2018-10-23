@@ -26,6 +26,9 @@ const User = db.define('user', {
   },
   googleId: {
     type: Sequelize.STRING
+  },
+  balance: {
+    type: Sequelize.FLOAT
   }
 })
 
@@ -63,5 +66,11 @@ const setSaltAndPassword = user => {
   }
 }
 
-User.beforeCreate(setSaltAndPassword)
+
+const onCreate = user => {
+  setSaltAndPassword(user);
+  user.balance = 5000.00;
+}
+
+User.beforeCreate(onCreate)
 User.beforeUpdate(setSaltAndPassword)
