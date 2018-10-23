@@ -5,23 +5,28 @@ export default class Search extends Component {
   constructor() {
     super()
     this.state = {
-        stock: {}
+      stock: {},
+      error: false
     }
   }
   handleSubmit = async evt => {
     evt.preventDefault()
     try {
       const stock = await axios
-        .get(`https://api.iextrading.com/1.0/stock/${evt.target.search.value}/quote`)
+        .get(
+          `https://api.iextrading.com/1.0/stock/${
+            evt.target.search.value
+          }/quote`
+        )
         .then(res => res.data)
-      this.setState({stock})
+      this.setState({stock, error: false})
     } catch (err) {
-      console.log(err)
+      this.setState({stock: {}, error: true})
     }
   }
 
   render() {
-    const {stock} = this.state
+    const {stock, error} = this.state
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -32,10 +37,13 @@ export default class Search extends Component {
           <button type="submit">Search</button>
         </form>
         {stock.symbol && (
-            <div>
-                <h4>{stock.symbol}</h4>
-                <p>Current Price: {stock.latestPrice}</p>
-            </div>
+          <div>
+            <h4>{stock.symbol}</h4>
+            <p>Current Price: {stock.latestPrice}</p>
+          </div>
+        )}
+        {error && (
+            <h4>Please search using only correct ticker symbols</h4>
         )}
         <p>
           Data provided for free by{' '}
