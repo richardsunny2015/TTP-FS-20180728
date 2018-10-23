@@ -43,7 +43,7 @@ export default class Search extends Component {
           </div>
         )}
         {error && (
-            <h4>Please search using only correct ticker symbols</h4>
+            <h4>Please search using valid ticker symbols</h4>
         )}
         <p>
           Data provided for free by{' '}
