@@ -40,6 +40,7 @@ export default class Search extends Component {
           <div>
             <h4>{stock.symbol}</h4>
             <p>Current Price: {stock.latestPrice}</p>
+            <button>Buy</button>
           </div>
         )}
         {error && (
