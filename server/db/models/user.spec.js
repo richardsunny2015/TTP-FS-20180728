@@ -27,6 +27,24 @@ describe('User model', () => {
       it('returns false if the password is incorrect', () => {
         expect(cody.correctPassword('bonez')).to.be.equal(false)
       })
+
     }) // end describe('correctPassword')
   }) // end describe('instanceMethods')
+  describe('hooks', () => {
+    describe('onCreate', () => {
+      let rich;
+      beforeEach(async () => {
+        rich = await User.create({
+          email: 'rich@email.com',
+          password: 'howdy'
+        })
+      })
+      it('automatically has a balance when created', () => {
+        expect(rich.balance).to.be.a('number');
+      })
+      it('should have a balance equal to 5000.00', () => {
+        expect(rich.balance).to.equal(5000.00);
+      })
+    })
+  })
 }) // end describe('User model')
