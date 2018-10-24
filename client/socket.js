@@ -25,8 +25,4 @@ socket.on('message', message => {
   counter++
 })
 
-// socket.on('disconnect', () => {
-//   socket.open()
-// })
-
 export default socket
