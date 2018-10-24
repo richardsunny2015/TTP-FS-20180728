@@ -1,51 +1,23 @@
 import React, {Component} from 'react'
 import axios from 'axios'
+import {connect} from 'react-redux'
+import {fetchStocks} from '../store'
+import Stocks from './Stocks'
 
-export default class Search extends Component {
-  constructor() {
-    super()
-    this.state = {
-      stock: {},
-      error: false
-    }
-  }
-  handleSubmit = async evt => {
-    evt.preventDefault()
-    try {
-      const [stock] = await axios
-        .get(
-          `https://api.iextrading.com/1.0/tops/last?symbols=${
-            evt.target.search.value
-          }`
-        )
-        .then(res => res.data)
-      this.setState({stock, error: false})
-    } catch (err) {
-      this.setState({stock: {}, error: true})
-    }
-  }
+class Search extends Component {
 
   render() {
-    const {stock, error} = this.state
+    const {handleSubmit, currentStocks} = this.props
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <label htmlFor="search">
             <small>Search: </small>
           </label>
           <input name="search" type="text" />
           <button type="submit">Search</button>
         </form>
-        {stock.symbol && (
-          <div>
-            <h4>{stock.symbol}</h4>
-            <p>Current Price: {stock.price}</p>
-            <button>Buy</button>
-          </div>
-        )}
-        {error && (
-            <h4>Please search using valid ticker symbols</h4>
-        )}
+        <Stocks stocks={currentStocks} />
         <p>
           Data provided for free by{' '}
           <a href="https://iextrading.com/developer">IEX</a>. View{' '}
@@ -57,3 +29,16 @@ export default class Search extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  currentStocks: state.currentStocks
+})
+
+const mapDispatchToProps = dispatch => ({
+  handleSubmit: evt => {
+    evt.preventDefault()
+    dispatch(fetchStocks([evt.target.search.value]))
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search)
