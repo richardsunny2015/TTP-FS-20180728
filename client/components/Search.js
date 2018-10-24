@@ -12,11 +12,11 @@ export default class Search extends Component {
   handleSubmit = async evt => {
     evt.preventDefault()
     try {
-      const stock = await axios
+      const [stock] = await axios
         .get(
-          `https://api.iextrading.com/1.0/stock/${
+          `https://api.iextrading.com/1.0/tops/last?symbols=${
             evt.target.search.value
-          }/quote`
+          }`
         )
         .then(res => res.data)
       this.setState({stock, error: false})
@@ -39,7 +39,7 @@ export default class Search extends Component {
         {stock.symbol && (
           <div>
             <h4>{stock.symbol}</h4>
-            <p>Current Price: {stock.latestPrice}</p>
+            <p>Current Price: {stock.price}</p>
             <button>Buy</button>
           </div>
         )}
