@@ -1,9 +1,10 @@
-// import io from 'socket.io-client'
+import io from 'socket.io-client'
+const url = 'https://ws-api.iextrading.com/1.0/last'
+const socket = io(url)
 
-// const socket = io(window.location.origin)
+socket.on('message', message => console.log(JSON.parse(message)))
+socket.on('connect', () => {
+  socket.emit('subscribe', 'aapl')
+})
 
-// socket.on('connect', () => {
-//   console.log('Connected!')
-// })
-
-// export default socket
+export default socket
