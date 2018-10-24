@@ -5,12 +5,36 @@ import {fetchStocks} from '../store'
 import Stocks from './Stocks'
 
 class Search extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      interval: () => {},
+      startInterval: false
+    }
+  }
+  componentDidMount() {
+    console.log(this.state.startInterval)
+    if (this.state.startInterval) {
+      let onIntervalFunc = setInterval(this.props.onInterval(this.props.currentStocks), 1000)
+      this.setState({interval: onIntervalFunc})
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.interval)
+  }
+
+  handleSubmit = evt => {
+    this.setState({startInterval: true})
+    evt.preventDefault()
+    this.props.dispatchQuery(evt)
+  }
 
   render() {
-    const {handleSubmit, currentStocks} = this.props
+    const {currentStocks} = this.props
     return (
       <div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={this.handleSubmit}>
           <label htmlFor="search">
             <small>Search: </small>
           </label>
@@ -35,9 +59,12 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  handleSubmit: evt => {
-    evt.preventDefault()
+  dispatchQuery: evt => {
+    // evt.preventDefault()
     dispatch(fetchStocks([evt.target.search.value]))
+  },
+  onInterval: stocks => () => {
+    dispatch(fetchStocks(stocks))
   }
 })
 
