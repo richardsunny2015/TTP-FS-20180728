@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User} = require('../db/models')
+const {User, Transaction} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -13,5 +13,24 @@ router.get('/', async (req, res, next) => {
     res.json(users)
   } catch (err) {
     next(err)
+  }
+})
+
+router.get('/:userId/transactions', async (req, res, next) => {
+  const {userId} = req.params
+
+  if (req.user.id !== Number(userId)) {
+    res.status(403).send('Forbidden')
+  } else {
+    try {
+      const user = await User.findOne({
+        where: {id: userId},
+        include: [{model: Transaction}]
+      })
+      const transactions = user.transactions
+      res.status(200).send(transactions)
+    } catch (err) {
+      next(err)
+    }
   }
 })
