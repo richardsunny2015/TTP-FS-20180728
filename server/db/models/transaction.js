@@ -6,10 +6,10 @@ const Transaction = db.define('transaction', {
     type: Sequelize.ENUM('sale', 'purchase'),
     allowNull: false
   },
-  userId: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
+//   userId: {
+//     type: Sequelize.INTEGER,
+//     allowNull: false
+//   },
   shares: {
       type: Sequelize.INTEGER,
       allowNull: false
