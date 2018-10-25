@@ -12,7 +12,10 @@ class Transactions extends Component {
       <section>
         {transactions.map(transaction => (
           <div key={transaction.id}>
-            <h4>{transaction.total}</h4>
+            <h4>{transaction.type.slice(0, 1).toUpperCase() + transaction.type.slice(1)}</h4>
+            <p>Price Per Share: {transaction.pricePerShare}</p>
+            <p># of Shares: {transaction.shares}</p>
+            <p>Total: {transaction.total}</p>
           </div>
         ))}
       </section>
