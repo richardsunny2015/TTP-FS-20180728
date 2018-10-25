@@ -21,7 +21,7 @@ const Transaction = db.define('transaction', {
   total: {
       type: Sequelize.VIRTUAL,
       get() {
-          return this.getDataValue('pricePerShare') * this.getDataValue('shares')
+          return (this.getDataValue('pricePerShare') * this.getDataValue('shares')).toFixed(2)
       }
   }
 })
