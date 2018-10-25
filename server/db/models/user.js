@@ -41,6 +41,17 @@ User.prototype.correctPassword = function(candidatePwd) {
   return User.encryptPassword(candidatePwd, this.salt()) === this.password()
 }
 
+User.prototype.updateBalance  = function(transaction) {
+  const total = Number(transaction.total)
+  if (transaction.type === 'sale') {
+    const afterSaleBalance = this.balance + total
+    this.balance = afterSaleBalance
+  } else {
+    const afterPurchaseBalance = this.balance - total
+    this.balance = afterPurchaseBalance
+  }
+}
+
 /**
  * classMethods
  */
