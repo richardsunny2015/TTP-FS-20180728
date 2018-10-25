@@ -15,3 +15,14 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.get('/:userId/transactions', async (req, res, next) => {
+  const {userId} = req.params
+  try {
+    const user = await User.findOne({where: {id: userId}, include: [{model: 'Transaction'}]})
+    const transactions = user.transactions
+    res.status(200).send(transactions)
+  } catch (err) {
+    next(err)
+  }
+})
