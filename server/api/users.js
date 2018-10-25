@@ -18,11 +18,19 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:userId/transactions', async (req, res, next) => {
   const {userId} = req.params
-  try {
-    const user = await User.findOne({where: {id: userId}, include: [{model: Transaction}]})
-    const transactions = user.transactions
-    res.status(200).send(transactions)
-  } catch (err) {
-    next(err)
+
+  if (req.user.id !== Number(userId)) {
+    res.status(403).send('Forbidden')
+  } else {
+    try {
+      const user = await User.findOne({
+        where: {id: userId},
+        include: [{model: Transaction}]
+      })
+      const transactions = user.transactions
+      res.status(200).send(transactions)
+    } catch (err) {
+      next(err)
+    }
   }
 })
