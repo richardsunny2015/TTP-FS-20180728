@@ -7,8 +7,7 @@ const Portfolio = db.define('portfolio', {
         allowNull: false
     },
     shares: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+        type: Sequelize.INTEGER
     }
 })
 
