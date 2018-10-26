@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 import {connect} from 'react-redux'
-import {fetchStocks} from '../store'
+import {fetchStocks, removeStocks} from '../store'
 import Stocks from './Stocks'
 
 class Search extends Component {
 
   componentWillUnmount() {
-    //TODO remove currentStocks from store
+    this.props.revertToDefault()
   }
 
   render() {
@@ -42,7 +42,8 @@ const mapDispatchToProps = dispatch => ({
   handleSubmit: evt => {
     evt.preventDefault()
     dispatch(fetchStocks([evt.target.search.value]))
-  }
+  },
+  revertToDefault: () => dispatch(removeStocks())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search)

@@ -4,7 +4,7 @@ import axios from 'axios'
  * ACTION TYPES
  */
 const GET_STOCKS = 'GET_STOCKS'
-const REMOVE_STOCKS = 'REMOVE_STOCKS'
+export const REMOVE_STOCKS = 'REMOVE_STOCKS'
 
 /**
  * INITIAL STATE
