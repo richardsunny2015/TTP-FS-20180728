@@ -15,9 +15,10 @@ router.post('/', async (req, res, next) => {
       const user = await User.findById(userId)
       transaction.setUser(user)
       user.updateBalance(transaction)
-      const portfolio = await Portfolio.findOrCreate({
+      const portfolioArray = await Portfolio.findOrCreate({
         where: {symbol: transaction.symbol, userId}
       })
+      const portfolio = portfolioArray[0]
       portfolio.updateShares(transaction)
       if (portfolio.shares === 0) await portfolio.destroy()
       else await portfolio.save()
