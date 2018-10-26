@@ -1,15 +1,19 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import axios from 'axios'
+import { STATUS_CODES } from 'http';
 
 const Stocks = props => {
-  const {stocks, userId} = props
+  const {stocks, userId, shares} = props
+  const isPortfolio = props.isPortfolio || false
+
   return (
     <section>
-      {stocks.map(stock => (
+      {stocks.map((stock, idx) => (
         <div key={stock.symbol}>
           <h4>{stock.symbol}</h4>
           <p>Current Price: {stock.price}</p>
+          {isPortfolio && (<p># of Shares: {shares[idx]}</p>)}
           <form onSubmit={purchaseSubmit(stock, userId)}>
             <input type="number" name="shares" min="1" />
             <button type="submit" name="action" value="purchase">
@@ -41,7 +45,8 @@ const purchaseSubmit = (stockInfo, userId) => evt => {
 }
 
 const mapStateToProps = state => ({
-  userId: state.user.id
+  userId: state.user.id,
+  shares: state.portfolio.map(portfolio => portfolio.shares)
 })
 
 export default connect(mapStateToProps)(Stocks)

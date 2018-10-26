@@ -13,7 +13,7 @@ class Portfolio extends Component {
       <div>
         <h2>Portfolio</h2>
         <h3>Cash Balance: {`$${balance}`}</h3>
-        <Stocks stocks={currentStocks} />
+        <Stocks stocks={currentStocks} isPortfolio={true} />
       </div>
     )
   }
