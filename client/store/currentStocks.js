@@ -4,6 +4,7 @@ import axios from 'axios'
  * ACTION TYPES
  */
 const GET_STOCKS = 'GET_STOCKS'
+export const REMOVE_STOCKS = 'REMOVE_STOCKS'
 
 /**
  * INITIAL STATE
@@ -14,6 +15,7 @@ const defaultCurrentStocks = []
  * ACTION CREATORS
  */
 export const getStocks = currentStocks => ({type: GET_STOCKS, currentStocks})
+export const removeStocks = () => ({type: REMOVE_STOCKS})
 
 /**
  * THUNK CREATORS
@@ -30,7 +32,6 @@ export const fetchStocks = stocks => async dispatch => {
   }
 }
 
-
 /**
  * REDUCER
  */
@@ -38,6 +39,8 @@ export default (state = defaultCurrentStocks, action) => {
   switch (action.type) {
     case GET_STOCKS:
       return action.currentStocks
+    case REMOVE_STOCKS:
+      return defaultCurrentStocks
     default:
       return state
   }
