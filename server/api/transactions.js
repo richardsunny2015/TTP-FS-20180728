@@ -4,7 +4,7 @@ module.exports = router
 
 router.post('/', async (req, res, next) => {
   const {pricePerShare, shares, userId, type, symbol} = req.body
-  if (req.user.id !== userId) {
+  if (req.user.id === userId) {
     try {
       const transaction = await Transaction.create({
         pricePerShare,
