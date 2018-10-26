@@ -1,17 +1,32 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {fetchPortfolio} from '../store'
+import Stocks from './Stocks'
 
-const Portfolio = props => {
+class Portfolio extends Component {
+    componentDidMount() {
+        this.props.listPortfolio(this.props.userId)
+    }
+  render() {
+      const {balance, currentStocks} = this.props
     return (
-        <div>
-            <h2>Portfolio</h2>
-            <h3>Cash Balance: {`$${props.balance}`}</h3>
-        </div>
+      <div>
+        <h2>Portfolio</h2>
+        <h3>Cash Balance: {`$${balance}`}</h3>
+        <Stocks stocks={currentStocks} isPortfolio={true} />
+      </div>
     )
+  }
 }
 
 const mapStateToProps = state => ({
-    balance: state.user.balance
+  balance: state.user.balance,
+  userId: state.user.id,
+  currentStocks: state.currentStocks
 })
 
-export default connect(mapStateToProps)(Portfolio)
+const mapDispatchToProps = dispatch => ({
+    listPortfolio: userId => dispatch(fetchPortfolio(userId))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Portfolio)

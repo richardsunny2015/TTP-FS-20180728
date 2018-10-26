@@ -30,6 +30,7 @@ export const fetchStocks = stocks => async dispatch => {
   }
 }
 
+
 /**
  * REDUCER
  */
