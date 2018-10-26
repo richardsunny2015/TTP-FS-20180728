@@ -13,5 +13,6 @@ User.hasMany(Portfolio)
 
 module.exports = {
   User,
-  Transaction
+  Transaction,
+  Portfolio
 }
