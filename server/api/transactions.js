@@ -24,7 +24,7 @@ router.post('/', async (req, res, next) => {
       else await portfolio.save()
       await user.save()
       await transaction.save()
-      res.status(201).send(transaction)
+      res.status(201).send(portfolio)
     } catch (err) {
       next(err)
     }

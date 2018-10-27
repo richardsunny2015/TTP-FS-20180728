@@ -1,16 +1,16 @@
-/* global describe beforeEach it */
+/* global xdescribe beforeEach it */
 
 const {expect} = require('chai')
 const db = require('../index')
 const User = db.model('user')
 
-describe('User model', () => {
+xdescribe('User model', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
 
-  describe('instanceMethods', () => {
-    describe('correctPassword', () => {
+  xdescribe('instanceMethods', () => {
+    xdescribe('correctPassword', () => {
       let cody
 
       beforeEach(async () => {
@@ -28,10 +28,10 @@ describe('User model', () => {
         expect(cody.correctPassword('bonez')).to.be.equal(false)
       })
 
-    }) // end describe('correctPassword')
-  }) // end describe('instanceMethods')
-  describe('hooks', () => {
-    describe('onCreate', () => {
+    }) // end xdescribe('correctPassword')
+  }) // end xdescribe('instanceMethods')
+  xdescribe('hooks', () => {
+    xdescribe('onCreate', () => {
       let rich;
       beforeEach(async () => {
         rich = await User.create({
@@ -47,4 +47,4 @@ describe('User model', () => {
       })
     })
   })
-}) // end describe('User model')
+}) // end xdescribe('User model')

@@ -1,4 +1,4 @@
-/* global describe beforeEach it */
+/* global xdescribe beforeEach it */
 
 import {expect} from 'chai'
 import React from 'react'
@@ -9,7 +9,7 @@ import {UserHome} from './user-home'
 const adapter = new Adapter()
 enzyme.configure({adapter})
 
-describe('UserHome', () => {
+xdescribe('UserHome', () => {
   let userHome
 
   beforeEach(() => {
