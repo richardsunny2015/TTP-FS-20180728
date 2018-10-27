@@ -41,6 +41,7 @@ const purchaseSubmit = (stockInfo, userId, balance, cb) => evt => {
     axios
       .post('/api/transactions', objToSend)
       .then(res => res.data)
+      .then(console.log)
       .then(() => cb())
       .catch(console.log)
   } else {
