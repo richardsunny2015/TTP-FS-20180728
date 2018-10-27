@@ -19,7 +19,7 @@ const defaultPortfolio = []
  */
 
 export const getPortfolio = portfolio => ({type: GET_PORTFOLIO, portfolio})
-const updateShares = stock => ({type: UPDATE_SHARES, stock})
+export const updateShares = stock => ({type: UPDATE_SHARES, stock})
 
 /**
  * THUNK CREATORS
