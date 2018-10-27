@@ -4,6 +4,7 @@ import updateSharesHelper from './updateSharesHelper'
 describe('updateSharesHelper', () => {
   let prevState
   let target
+  let target2
   beforeEach(() => {
     prevState = [
       {
@@ -24,6 +25,12 @@ describe('updateSharesHelper', () => {
       symbol: 'FB',
       shares: 20,
       userId: 1
+    }
+    target2 = {
+        id: 3,
+        symbol: 'AAPL',
+        shares: 20,
+        userId: 1
     }
   })
   it('returns an array', () => {
@@ -49,5 +56,8 @@ describe('updateSharesHelper', () => {
       }
     ]
     expect(updateSharesHelper(prevState, target)).to.eql(targetArray)
+  })
+  it('adds new element if it is not in there', () => {
+      expect(updateSharesHelper(prevState, target2)).to.eql([...prevState, target2])
   })
 })
