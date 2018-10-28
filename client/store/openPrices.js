@@ -4,6 +4,7 @@ import axios from 'axios'
  * ACTION TYPES
  */
 const GET_OPEN_PRICES = 'GET_OPEN_PRICES'
+const REMOVE_OPEN_PRICES = 'REMOVE_OPEN_PRICES'
 
 /**
  * ACTION CREATORS
@@ -11,6 +12,10 @@ const GET_OPEN_PRICES = 'GET_OPEN_PRICES'
 const getOpenPrices = openPrices => ({
   type: GET_OPEN_PRICES,
   openPrices
+})
+
+export const removeOpenPrices = () => ({
+  type: REMOVE_OPEN_PRICES
 })
 
 /**
@@ -43,6 +48,8 @@ export default (state = defaultState, action) => {
   switch (action.type) {
     case GET_OPEN_PRICES:
       return action.openPrices
+    case REMOVE_OPEN_PRICES:
+      return defaultState
     default:
       return state
   }
