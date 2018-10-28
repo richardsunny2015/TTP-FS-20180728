@@ -11,9 +11,10 @@ class Search extends Component {
   }
 
   render() {
-    const {currentStocks, handleSubmit} = this.props
+    const {currentStocks, handleSubmit, balance} = this.props
     return (
       <div>
+        <h3>Cash Balance: {`$${balance}`}</h3>
         <form onSubmit={handleSubmit}>
           <label htmlFor="search">
             <small>Search: </small>
@@ -35,7 +36,8 @@ class Search extends Component {
 }
 
 const mapStateToProps = state => ({
-  currentStocks: state.currentStocks
+  currentStocks: state.currentStocks,
+  balance: state.user.balance
 })
 
 const mapDispatchToProps = dispatch => ({
