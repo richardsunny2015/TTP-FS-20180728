@@ -2,9 +2,17 @@ import React from 'react'
 import {connect} from 'react-redux'
 import axios from 'axios'
 import {me, updateShares} from '../store'
+import {toastr} from 'react-redux-toastr'
 
 const Stocks = props => {
-  const {stocks, userId, shares, balance, fetchBalance, updatePortfolio} = props
+  const {
+    stocks,
+    userId,
+    shares,
+    balance,
+    fetchBalance,
+    updatePortfolio
+  } = props
   const isPortfolio = props.isPortfolio || false
 
   return (
@@ -13,8 +21,17 @@ const Stocks = props => {
         <div key={stock.symbol}>
           <h4>{stock.symbol}</h4>
           <p>Current Price: {stock.price}</p>
-          {isPortfolio && <p># of Shares: {shares[idx]}</p>}
-          <form onSubmit={purchaseSubmit(stock, userId, balance, fetchBalance, updatePortfolio)}>
+          {isPortfolio && <p># of Shares Owned: {shares[idx]}</p>}
+          <form
+            onSubmit={purchaseSubmit(
+              stock,
+              userId,
+              balance,
+              fetchBalance,
+              updatePortfolio,
+
+            )}
+          >
             <input type="number" name="shares" min="1" />
             <button type="submit" name="action" value="purchase">
               Buy
@@ -26,7 +43,13 @@ const Stocks = props => {
   )
 }
 
-const purchaseSubmit = (stockInfo, userId, balance, fetchBalance, updatePortfolio) => evt => {
+const purchaseSubmit = (
+  stockInfo,
+  userId,
+  balance,
+  fetchBalance,
+  updatePortfolio
+) => evt => {
   evt.preventDefault()
   const shares = Number(evt.target.shares.value)
   const total = stockInfo.price * shares
@@ -45,7 +68,7 @@ const purchaseSubmit = (stockInfo, userId, balance, fetchBalance, updatePortfoli
       .then(() => fetchBalance())
       .catch(console.log)
   } else {
-    console.log('TOO MUCH')
+    toastr.warning('Insufficient Funds', 'Please deposit more funds into your account') // change this to some sort of state
   }
 }
 
