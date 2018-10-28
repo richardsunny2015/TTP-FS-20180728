@@ -7,6 +7,7 @@ import {updateSharesHelper} from '../utilities'
 
 const GET_PORTFOLIO = 'GET_PORTFOLIO'
 const UPDATE_SHARES = 'UPDATE_SHARES'
+const REMOVE_PORTFOLIO = 'REMOVE_PORTFOLIO'
 
 /**
  * INITIAL STATE
@@ -20,6 +21,7 @@ const defaultPortfolio = []
 
 export const getPortfolio = portfolio => ({type: GET_PORTFOLIO, portfolio})
 export const updateShares = stock => ({type: UPDATE_SHARES, stock})
+export const removePortfolio = () => ({type: REMOVE_PORTFOLIO})
 
 /**
  * THUNK CREATORS
@@ -47,6 +49,8 @@ export default (state = defaultPortfolio, action) => {
     case UPDATE_SHARES:
       // make copy of state, find stock by symbol, change shares property
       return updateSharesHelper(state, action.stock)
+    case REMOVE_PORTFOLIO:
+      return defaultPortfolio
     default:
       return state
   }

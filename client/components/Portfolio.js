@@ -1,6 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchPortfolio, removeStocks, removeOpenPrices} from '../store'
+import {
+  fetchPortfolio,
+  removeStocks,
+  removeOpenPrices,
+  removePortfolio
+} from '../store'
 import Stocks from './Stocks'
 
 class Portfolio extends Component {
@@ -33,6 +38,7 @@ const mapDispatchToProps = dispatch => ({
   revertToDefault: () => {
     dispatch(removeStocks())
     dispatch(removeOpenPrices())
+    dispatch(removePortfolio())
   }
 })
 

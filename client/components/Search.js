@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import axios from 'axios'
 import {connect} from 'react-redux'
 import {fetchStocks, removeStocks, removeOpenPrices} from '../store'
 import Stocks from './Stocks'
