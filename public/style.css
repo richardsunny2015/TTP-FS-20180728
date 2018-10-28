@@ -19,3 +19,15 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.less-than-op {
+  color: red
+}
+
+.greater-than-op {
+  color: green
+}
+
+.equal-to-op {
+  color: grey
+}
