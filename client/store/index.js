@@ -7,8 +7,9 @@ import currentStocks from './currentStocks'
 import transactions from './transactions'
 import portfolio from './portfolio'
 import canAfford from './canAfford'
+import {reducer as toastr} from 'react-redux-toastr'
 
-const reducer = combineReducers({user, currentStocks, transactions, portfolio, canAfford})
+const reducer = combineReducers({user, currentStocks, transactions, portfolio, canAfford, toastr})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )

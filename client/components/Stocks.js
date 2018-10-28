@@ -1,10 +1,20 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import axios from 'axios'
-import {me, updateShares} from '../store'
+import {me, updateShares, setCanAfford} from '../store'
+import {toastr} from 'react-redux-toastr'
 
 const Stocks = props => {
-  const {stocks, userId, shares, balance, fetchBalance, updatePortfolio} = props
+  const {
+    stocks,
+    userId,
+    shares,
+    balance,
+    canAfford,
+    fetchBalance,
+    updatePortfolio,
+    handleCanAfford
+  } = props
   const isPortfolio = props.isPortfolio || false
 
   return (
@@ -14,7 +24,16 @@ const Stocks = props => {
           <h4>{stock.symbol}</h4>
           <p>Current Price: {stock.price}</p>
           {isPortfolio && <p># of Shares Owned: {shares[idx]}</p>}
-          <form onSubmit={purchaseSubmit(stock, userId, balance, fetchBalance, updatePortfolio)}>
+          <form
+            onSubmit={purchaseSubmit(
+              stock,
+              userId,
+              balance,
+              fetchBalance,
+              updatePortfolio,
+              handleCanAfford
+            )}
+          >
             <input type="number" name="shares" min="1" />
             <button type="submit" name="action" value="purchase">
               Buy
@@ -26,7 +45,14 @@ const Stocks = props => {
   )
 }
 
-const purchaseSubmit = (stockInfo, userId, balance, fetchBalance, updatePortfolio) => evt => {
+const purchaseSubmit = (
+  stockInfo,
+  userId,
+  balance,
+  fetchBalance,
+  updatePortfolio,
+  handleCanAfford
+) => evt => {
   evt.preventDefault()
   const shares = Number(evt.target.shares.value)
   const total = stockInfo.price * shares
@@ -42,22 +68,27 @@ const purchaseSubmit = (stockInfo, userId, balance, fetchBalance, updatePortfoli
       .post('/api/transactions', objToSend)
       .then(res => res.data)
       .then(updatePortfolio)
-      .then(() => fetchBalance())
+      .then(() => {
+        fetchBalance()
+        handleCanAfford(true)
+      })
       .catch(console.log)
   } else {
-    console.log('TOO MUCH') // change this to some sort of state
+    toastr.warning('Insufficient Funds', 'Please deposit more funds into your account') // change this to some sort of state
   }
 }
 
 const mapStateToProps = state => ({
   userId: state.user.id,
   shares: state.portfolio.map(portfolio => portfolio.shares),
-  balance: state.user.balance
+  balance: state.user.balance,
+  canAfford: state.canAfford
 })
 
 const mapDispatchToProps = dispatch => ({
   fetchBalance: () => dispatch(me()),
-  updatePortfolio: stock => dispatch(updateShares(stock))
+  updatePortfolio: stock => dispatch(updateShares(stock)),
+  handleCanAfford: bool => dispatch(setCanAfford(bool))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Stocks)
