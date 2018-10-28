@@ -13,7 +13,7 @@ const Stocks = props => {
         <div key={stock.symbol}>
           <h4>{stock.symbol}</h4>
           <p>Current Price: {stock.price}</p>
-          {isPortfolio && <p># of Shares: {shares[idx]}</p>}
+          {isPortfolio && <p># of Shares Owned: {shares[idx]}</p>}
           <form onSubmit={purchaseSubmit(stock, userId, balance, fetchBalance, updatePortfolio)}>
             <input type="number" name="shares" min="1" />
             <button type="submit" name="action" value="purchase">
@@ -45,7 +45,7 @@ const purchaseSubmit = (stockInfo, userId, balance, fetchBalance, updatePortfoli
       .then(() => fetchBalance())
       .catch(console.log)
   } else {
-    console.log('TOO MUCH')
+    console.log('TOO MUCH') // change this to some sort of state
   }
 }
 
