@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {toastr} from 'react-redux-toastr'
 
 /**
  * ACTION TYPES
@@ -26,7 +27,14 @@ export const fetchStocks = stocks => async dispatch => {
     const res = await axios.get(
       `https://api.iextrading.com/1.0/tops/last?symbols=${stocks.join()}`
     )
-    dispatch(getStocks(res.data))
+    if (res.data.length) {
+      dispatch(getStocks(res.data))
+    } else {
+      toastr.warning(
+        'Invalid Ticker Symbol',
+        'Please search with valid ticker symbols'
+      )
+    }
   } catch (err) {
     console.log(err)
   }
