@@ -4,14 +4,7 @@ import {me, updateShares} from '../store'
 import {purchaseSubmit} from '../utilities'
 
 const Stocks = props => {
-  const {
-    stocks,
-    userId,
-    shares,
-    balance,
-    fetchBalance,
-    updatePortfolio
-  } = props
+  const {stocks, userId, shares, balance, fetchBalance, updatePortfolio} = props
   const isPortfolio = props.isPortfolio || false
 
   return (
@@ -20,15 +13,19 @@ const Stocks = props => {
         <div key={stock.symbol}>
           <h4>{stock.symbol}</h4>
           <p>Current Price: {stock.price}</p>
-          {isPortfolio && <p># of Shares Owned: {shares[idx]}</p>}
+          {isPortfolio && (
+            <div>
+              <p># of Shares Owned: {shares[idx]}</p>
+              <p>Value: {(shares[idx] * stock.price).toFixed(2)}</p>
+            </div>
+          )}
           <form
             onSubmit={purchaseSubmit(
               stock,
               userId,
               balance,
               fetchBalance,
-              updatePortfolio,
-
+              updatePortfolio
             )}
           >
             <input type="number" name="shares" min="1" />
