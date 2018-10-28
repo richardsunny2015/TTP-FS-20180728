@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import axios from 'axios'
-import {me, updateShares, setCanAfford} from '../store'
+import {me, updateShares} from '../store'
 import {toastr} from 'react-redux-toastr'
 
 const Stocks = props => {
@@ -10,10 +10,8 @@ const Stocks = props => {
     userId,
     shares,
     balance,
-    canAfford,
     fetchBalance,
-    updatePortfolio,
-    handleCanAfford
+    updatePortfolio
   } = props
   const isPortfolio = props.isPortfolio || false
 
@@ -31,7 +29,7 @@ const Stocks = props => {
               balance,
               fetchBalance,
               updatePortfolio,
-              handleCanAfford
+
             )}
           >
             <input type="number" name="shares" min="1" />
@@ -50,8 +48,7 @@ const purchaseSubmit = (
   userId,
   balance,
   fetchBalance,
-  updatePortfolio,
-  handleCanAfford
+  updatePortfolio
 ) => evt => {
   evt.preventDefault()
   const shares = Number(evt.target.shares.value)
@@ -68,10 +65,7 @@ const purchaseSubmit = (
       .post('/api/transactions', objToSend)
       .then(res => res.data)
       .then(updatePortfolio)
-      .then(() => {
-        fetchBalance()
-        handleCanAfford(true)
-      })
+      .then(() => fetchBalance())
       .catch(console.log)
   } else {
     toastr.warning('Insufficient Funds', 'Please deposit more funds into your account') // change this to some sort of state
@@ -81,14 +75,12 @@ const purchaseSubmit = (
 const mapStateToProps = state => ({
   userId: state.user.id,
   shares: state.portfolio.map(portfolio => portfolio.shares),
-  balance: state.user.balance,
-  canAfford: state.canAfford
+  balance: state.user.balance
 })
 
 const mapDispatchToProps = dispatch => ({
   fetchBalance: () => dispatch(me()),
-  updatePortfolio: stock => dispatch(updateShares(stock)),
-  handleCanAfford: bool => dispatch(setCanAfford(bool))
+  updatePortfolio: stock => dispatch(updateShares(stock))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Stocks)
