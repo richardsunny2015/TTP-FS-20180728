@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {toastr} from 'react-redux-toastr'
+import {fetchOpenPrices} from './openPrices'
 
 /**
  * ACTION TYPES
@@ -29,6 +30,7 @@ export const fetchStocks = stocks => async dispatch => {
     )
     if (res.data.length) {
       dispatch(getStocks(res.data))
+      dispatch(fetchOpenPrices(stocks))
     } else {
       toastr.warning(
         'Invalid Ticker Symbol',
