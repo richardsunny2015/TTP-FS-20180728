@@ -1,15 +1,14 @@
 import io from 'socket.io-client'
-import store, {getStocks} from './store'
+import store, {updatePrices} from './store'
 
 const url = 'https://ws-api.iextrading.com/1.0/last'
 const socket = io(url)
 
 
 socket.on('message', message => {
-  let stockList = JSON.parse(message)
-  console.log('what is this?', stockList)
-  if (!Array.isArray(stockList)) stockList = [stockList] // TODO CREATE A HELPER FUNCTION THAT EITHER UPDATES PRICES OR ADDS ANOTHER STOCK
-  store.dispatch(getStocks(stockList))
+  let stock = JSON.parse(message)
+  console.log('heyy', stock)
+  store.dispatch(updatePrices(stock))
 })
 
 export default socket
