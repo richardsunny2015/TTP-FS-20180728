@@ -1,6 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchPortfolio, removeStocks} from '../store'
+import {
+  fetchPortfolio,
+  removeStocks,
+  removeOpenPrices,
+  removePortfolio
+} from '../store'
 import Stocks from './Stocks'
 
 class Portfolio extends Component {
@@ -30,7 +35,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   listPortfolio: userId => dispatch(fetchPortfolio(userId)),
-  revertToDefault: () => dispatch(removeStocks())
+  revertToDefault: () => {
+    dispatch(removeStocks())
+    dispatch(removeOpenPrices())
+    dispatch(removePortfolio())
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Portfolio)

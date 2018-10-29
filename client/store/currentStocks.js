@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {toastr} from 'react-redux-toastr'
 import socket from '../socket'
+import {fetchOpenPrices} from './openPrices'
 
 /**
  * ACTION TYPES
@@ -30,10 +31,7 @@ export const fetchStocks = stocks => async dispatch => {
     )
     if (res.data.length) {
       dispatch(getStocks(res.data))
-      socket.emit('unsubscribe', JSON.stringify({
-        channels: ['last']
-      }))
-      socket.emit('subscribe', stocks.join())
+      dispatch(fetchOpenPrices(stocks))
     } else {
       toastr.warning(
         'Invalid Ticker Symbol',
