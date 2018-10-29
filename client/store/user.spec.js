@@ -1,4 +1,4 @@
-/* global xdescribe beforeEach afterEach it */
+/* global describe beforeEach afterEach it */
 
 import {expect} from 'chai'
 import {me, logout} from './user'
@@ -11,7 +11,7 @@ import history from '../history'
 const middlewares = [thunkMiddleware]
 const mockStore = configureMockStore(middlewares)
 
-xdescribe('thunk creators', () => {
+describe('thunk creators', () => {
   let store
   let mockAxios
 
@@ -27,7 +27,7 @@ xdescribe('thunk creators', () => {
     store.clearActions()
   })
 
-  xdescribe('me', () => {
+  describe('me', () => {
     it('eventually dispatches the GET USER action', async () => {
       const fakeUser = {email: 'Cody'}
       mockAxios.onGet('/auth/me').replyOnce(200, fakeUser)
@@ -38,7 +38,7 @@ xdescribe('thunk creators', () => {
     })
   })
 
-  xdescribe('logout', () => {
+  describe('logout', () => {
     it('logout: eventually dispatches the REMOVE_USER action', async () => {
       mockAxios.onPost('/auth/logout').replyOnce(204)
       await store.dispatch(logout())

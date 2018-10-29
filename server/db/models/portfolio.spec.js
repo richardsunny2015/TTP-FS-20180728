@@ -4,12 +4,12 @@ const Portfolio = db.model('portfolio')
 const Transaction = db.model('transaction')
 const User = db.model('user')
 
-xdescribe('Portfolio model', () => {
+describe('Portfolio model', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
 
-  xdescribe('instance methods', () => {
+  describe('instance methods', () => {
     let cody
     let codyTransaction
     let codyTransaction2
@@ -35,7 +35,7 @@ xdescribe('Portfolio model', () => {
       codyTransaction2.setUser(cody)
       cody.updateBalance(codyTransaction)
     })
-    xdescribe('updateShares', () => {
+    describe('updateShares', () => {
       let applPortfolio
       beforeEach(async () => {
         let applPortfolioArray = await Portfolio.findOrCreate({
