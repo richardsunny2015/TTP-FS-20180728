@@ -35,6 +35,7 @@ export const fetchStocks = stocks => async dispatch => {
     if (res.data.length) {
       dispatch(getStocks(res.data))
       dispatch(fetchOpenPrices(stocks))
+      socket.emit('subscribe', stocks.join())
     } else {
       toastr.warning(
         'Invalid Ticker Symbol',
