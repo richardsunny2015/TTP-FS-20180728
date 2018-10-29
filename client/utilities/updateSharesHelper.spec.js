@@ -1,7 +1,7 @@
 import {expect} from 'chai'
 import updateSharesHelper from './updateSharesHelper'
 
-xdescribe('updateSharesHelper', () => {
+describe('updateSharesHelper', () => {
   let prevState
   let target
   let target2

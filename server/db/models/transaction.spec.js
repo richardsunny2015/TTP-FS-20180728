@@ -3,12 +3,12 @@ const db = require('../index')
 const Transaction = db.model('transaction')
 const User = db.model('user')
 
-xdescribe('Transaction model', () => {
+describe('Transaction model', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
 
-  xdescribe('association', () => {
+  describe('association', () => {
     let cody
     let codyTransaction
 
@@ -36,7 +36,7 @@ xdescribe('Transaction model', () => {
       ).toFixed(2)
       expect(codyTransaction.total).to.equal(total)
     })
-    xdescribe('user instance method', () => {
+    describe('user instance method', () => {
         let john
         let johnTransaction
         let johnTransaction2
