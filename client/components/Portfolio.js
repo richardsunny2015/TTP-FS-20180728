@@ -6,6 +6,7 @@ import {
   removeOpenPrices,
   removePortfolio
 } from '../store'
+import socket from '../socket'
 import Stocks from './Stocks'
 
 class Portfolio extends Component {
@@ -13,7 +14,7 @@ class Portfolio extends Component {
     this.props.listPortfolio(this.props.userId)
   }
   componentWillUnmount() {
-    this.props.revertToDefault()
+    this.props.revertToDefault(this.props.currentStocks)
   }
   render() {
     const {balance, currentStocks} = this.props
@@ -35,7 +36,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   listPortfolio: userId => dispatch(fetchPortfolio(userId)),
-  revertToDefault: () => {
+  revertToDefault: stocks => {
+    socket.emit('unsubscribe', stocks.map(stock => stock.symbol).join())
     dispatch(removeStocks())
     dispatch(removeOpenPrices())
     dispatch(removePortfolio())

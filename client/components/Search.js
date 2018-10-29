@@ -2,11 +2,12 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchStocks, removeStocks, removeOpenPrices} from '../store'
 import Stocks from './Stocks'
+import socket from '../socket'
 
 class Search extends Component {
 
   componentWillUnmount() {
-    this.props.revertToDefault()
+    this.props.revertToDefault(this.props.currentStocks)
   }
 
   render() {
@@ -44,7 +45,8 @@ const mapDispatchToProps = dispatch => ({
     evt.preventDefault()
     dispatch(fetchStocks([evt.target.search.value]))
   },
-  revertToDefault: () => {
+  revertToDefault: stocks => {
+    socket.emit('unsubscribe', stocks.map(stock => stock.symbol).join())
     dispatch(removeStocks())
     dispatch(removeOpenPrices())
   }
