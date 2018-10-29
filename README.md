@@ -45,8 +45,6 @@ Some tests have been written for this app. To see tests, run `npm test`.
 
 These are some ideas that I want to integrate into the app some day:
 
-* Dynamic prices
-
 * The ability to sell stocks in a user's portfolio
 
 * Styling
