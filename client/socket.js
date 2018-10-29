@@ -7,7 +7,6 @@ const socket = io(url)
 
 socket.on('message', message => {
   let stock = JSON.parse(message)
-  console.log('heyy', stock)
   store.dispatch(updatePrices(stock))
 })
 
